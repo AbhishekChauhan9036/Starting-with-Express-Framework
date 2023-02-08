@@ -1,13 +1,13 @@
 const express = require('express');
-const app=express();
-app.use((req,res,next)=>{
-    console.log('In the middleware');
-    next();
-});
+const bodyParser = require('body-parser');
+const app = express();
 
-app.use((req,res,next)=>{
-    console.log("this is next Middleware");
-    res.send('<h1> this is html  </h1>');
-});
+const shopRoutes = require('./routes/shop');
+const adminRoutes = require('./routes/admin');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(adminRoutes);
+app.use(shopRoutes);
 
 app.listen(3000);
