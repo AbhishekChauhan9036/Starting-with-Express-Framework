@@ -9,8 +9,9 @@ app.use('/',(req,res,next)=>{
 });
 
 app.use('/add-product',(req,res,next)=>{
-    res.send('<form action="/product" method="post"><label for="fname">First name:</label><br><input type="text" id="fname" name="fname"><br><label for="lname">Last name:</label><br> <input type="text" id="lname" name="lname"> </form> <input type="submit" value="Submit">');
+    res.send('<form action="/product" method="post"><input type="text" name="title"><button type=sumbit> Add Product </form>');
 });
+
 
 app.use('/product',(req,res,next)=>{
     console.log(req.body);
