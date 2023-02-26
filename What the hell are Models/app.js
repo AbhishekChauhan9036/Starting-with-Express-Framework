@@ -1,25 +1,24 @@
-const bodyParser = require('body-parser');
+const path = require('path');
+
 const express = require('express');
-const app=express();
-app.use(bodyParser.urlencoded({extended:false}));
+const bodyParser = require('body-parser');
 
-app.use('/',(req,res,next)=>{
-    console.log('This Always Run!');
-    next();
-});
+const errorController = require('./controllers/error');
 
-app.use('/add-product',(req,res,next)=>{
-    res.send('<form action="/product" method="post"><input type="text" name="title"><button type=sumbit> Add Product </form>');
-});
+const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
-app.use('/product',(req,res,next)=>{
-    console.log(req.body);
-    res.redirect('/');
-});
-app.use('/',(req,res,next)=>{
-    console.log("the add product page");
-    res.send('<h1> this is Express! </h1>');
-});
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
+
+app.use(errorController.get404);
 
 app.listen(3000);
